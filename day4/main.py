@@ -44,6 +44,11 @@ class structure():
 def main(input_f):
     with open(input_f) as f:
         s = structure(input_f)
+        # STRUCTURE HAS A VIRTAUL BOARD, FROM BINGO NUMBERS
+        # CHECK THE COORD MAP AND UPDATE THE COORDS
+        # THEN SCAN BOARD, USE TRANSPOSE FOR VERTICAL FINDING ONLY TRUES
+        # IF LENGTH OF TRUES == 5, YOU GOT A WINNER
+
 
 if __name__ == '__main__':
     print(main('sample_input.txt'))
