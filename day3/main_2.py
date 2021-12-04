@@ -1,8 +1,7 @@
 from numpy import transpose
 from decimal import Decimal, ROUND_HALF_UP
-bits_oxygen = [list(map(int,list(f.rstrip()))) for f in open("input.txt")]
-bits_scrubber = bits_oxygen.copy()
-bit_length = len(bits_oxygen[0])
+bits = [list(map(int,list(f.rstrip()))) for f in open("input.txt")]
+bit_length = len(bits[0])
 
 def findCriteria(array, common):
     for i in range(bit_length):
@@ -18,5 +17,5 @@ def findCriteria(array, common):
         raise Exception("Error in algorithm")
     return int("".join(map(str,array[0])),2)
 
-print(findCriteria(bits_oxygen, True) *
-    findCriteria(bits_scrubber, False))
+print(findCriteria(bits, True) *
+    findCriteria(bits, False))
