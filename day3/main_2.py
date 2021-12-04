@@ -16,7 +16,6 @@ def findCriteria(array, common):
             array = [ b for b in array if b[i] != criteria] 
     if len(array) != 1:
         raise Exception("Error in algorithm", round_behaviour)
-    print(array[0])
     return int("".join(map(str,array[0])),2)
 
 print(findCriteria(bits_oxygen, True) *
