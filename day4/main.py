@@ -1,3 +1,7 @@
+from numpy import transpose
+
+class NoWinnerException(Exception):
+    pass
 
 class structure():
     def __init__(self, f):
@@ -41,14 +45,54 @@ class structure():
             [False, False, False, False, False],
         ]
 
+    def winner(self):
+        for i, b in enumerate(self.virtual_boards):
+            row_trues = [len([y for y in i if y == True]) for i in b ]
+            if 5 in row_trues:
+                return i
+            column_trues = [len([y for y in i if y == True]) for i in transpose(b)]
+            if 5 in column_trues:
+                return i
+        raise NoWinnerException("No winner") 
+            
+
 def main(input_f):
+    winner = None
     with open(input_f) as f:
-        s = structure(input_f)
+        s = structure(f)
+        last_bingo_number = None
         # STRUCTURE HAS A VIRTAUL BOARD, FROM BINGO NUMBERS
         # CHECK THE COORD MAP AND UPDATE THE COORDS
         # THEN SCAN BOARD, USE TRANSPOSE FOR VERTICAL FINDING ONLY TRUES
         # IF LENGTH OF TRUES == 5, YOU GOT A WINNER
+        for number in list(map(int, s.bingo_numbers.split(","))):
+            last_bingo_number = number
+            try:
+                for coords in s.coord_set[number]:
+                    i,x,y = coords
+                    s.virtual_boards[i][x][y] = True
+            except KeyError:
+                pass
+            try:
+                winner = s.winner()
+            except NoWinnerException:
+                print("No winner this time") 
 
+            if winner  != None:
+                break
+        if winner == None:
+            raise NoWinnerException("No Winner after bingo numbers processed")
+
+        winning_board = s.boards[winner]
+        winning_board_matrix = s.virtual_boards[winner]
+        unmarked_sum = 0
+        for i, v in enumerate(winning_board_matrix):
+            for x, v in enumerate(v):
+                if winning_board_matrix[i][x] == False:
+                    unmarked_sum += int(winning_board[i][x])
+        return unmarked_sum * last_bingo_number
+        
 
 if __name__ == '__main__':
     print(main('sample_input.txt'))
+    print(main('input.txt'))

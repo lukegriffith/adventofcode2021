@@ -8,7 +8,7 @@ class TestDay4(unittest.TestCase):
 
     def test_main_sample_data(self):
         self.assertEqual(main.main(sample), 4512)
-       
+        pass 
     def test_structure(self):
         with open(sample) as f:
             struct = main.structure(f)
